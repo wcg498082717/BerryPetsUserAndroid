@@ -1,7 +1,9 @@
-package berry.wcg.com.berrypetsuserandroid;
+package berry.wcg.com.berrypetsuserandroid.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import berry.wcg.com.berrypetsuserandroid.R;
 
 public class SplashActivity extends AppCompatActivity {
 

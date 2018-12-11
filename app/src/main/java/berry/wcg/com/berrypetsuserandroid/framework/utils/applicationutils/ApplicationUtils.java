@@ -52,6 +52,10 @@ public class ApplicationUtils {
         return localVersion;
     }
 
+    /**
+     * @param context
+     * @return 获取设备信息
+     */
     public static String getDeviceInfo(Context context) {
         try {
             JSONObject json = new JSONObject();
@@ -106,6 +110,12 @@ public class ApplicationUtils {
         }
         return null;
     }
+
+    /**
+     * @param context
+     * @param permission
+     * @return true 拥有权限 false没有权限
+     */
     public static boolean checkPermission(Context context, String permission) {
         boolean result = false;
         if (Build.VERSION.SDK_INT >= 23) {
