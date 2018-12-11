@@ -45,9 +45,9 @@ public class OkHttpUtil {
                     int cacheSize = 10 * 1024 * 1024;
 
                     okHttpClient = new OkHttpClient.Builder()//构建器
-                            .connectTimeout(15, TimeUnit.SECONDS)//连接超时
-                            .writeTimeout(20, TimeUnit.SECONDS)//写入超时
-                            .readTimeout(20, TimeUnit.SECONDS)//读取超时
+                            .connectTimeout(5, TimeUnit.SECONDS)//连接超时
+                            .writeTimeout(5, TimeUnit.SECONDS)//写入超时
+                            .readTimeout(5, TimeUnit.SECONDS)//读取超时
 
                             .addInterceptor(new CommonParamsInterceptor())//添加的是应用拦截器...公共参数
                             //.addNetworkInterceptor(new CacheInterceptor())//添加的网络拦截器

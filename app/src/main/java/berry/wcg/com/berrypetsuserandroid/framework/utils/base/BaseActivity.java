@@ -7,7 +7,8 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import wcg.zhuli.yingwuj.R;
+import berry.wcg.com.berrypetsuserandroid.R;
+
 
 /**
  * Created by Administrator on 2018/3/15 0015.
@@ -33,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= 21) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.colororange));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorOrange));
             }
         }
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏

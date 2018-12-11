@@ -19,9 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import wcg.zhuli.yingwuj.wallet.utils.GetImagePath;
 
-import static wcg.zhuli.yingwuj.framework.AppConfig.ACTION_PHOTO_CROP;
+import static berry.wcg.com.berrypetsuserandroid.framework.AppConfig.ACTION_PHOTO_CROP;
+
 
 /**
  * Created by Administrator on 2016/8/23.

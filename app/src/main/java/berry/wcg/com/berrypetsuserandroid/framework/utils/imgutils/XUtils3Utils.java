@@ -7,8 +7,6 @@ import org.xutils.common.Callback;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
-import wcg.zhuli.yingwuj.R;
-
 
 /**
  * Created by Administrator on 2017/7/17.
@@ -22,9 +20,10 @@ public class XUtils3Utils {
         if (options != null) {
             return options;
         } else {
-            return options = new ImageOptions.Builder()
-                    .setIgnoreGif(false).setUseMemCache(true).setLoadingDrawableId(R.drawable.man1)
-                    .setFailureDrawableId(R.drawable.man1).build();
+//            return options = new ImageOptions.Builder()
+//                    .setIgnoreGif(false).setUseMemCache(true).setLoadingDrawableId(R.drawable.man1)
+//                    .setFailureDrawableId(R.drawable.man1).build();
+            return null;
         }
     }
 
@@ -32,9 +31,10 @@ public class XUtils3Utils {
         if (headoptions != null) {
             return headoptions;
         } else {
-            return headoptions = new ImageOptions.Builder().setCircular(true)
-                    .setIgnoreGif(false).setLoadingDrawableId(R.drawable.man1)
-                    .setFailureDrawableId(R.drawable.man1).build();
+//            return headoptions = new ImageOptions.Builder().setCircular(true)
+//                    .setIgnoreGif(false).setLoadingDrawableId(R.drawable.man1)
+//                    .setFailureDrawableId(R.drawable.man1).build();
+            return null;
         }
     }
 

@@ -9,7 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import wcg.zhuli.yingwuj.R;
+import berry.wcg.com.berrypetsuserandroid.R;
+
 
 /**
  * Created by Administrator on 2018/3/13 0013.
