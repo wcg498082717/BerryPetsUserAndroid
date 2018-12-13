@@ -1,5 +1,6 @@
 package berry.wcg.com.berrypetsuserandroid.framework.utils.net;
 
+import android.app.Activity;
 import android.os.Environment;
 import android.util.Log;
 
@@ -33,6 +34,12 @@ public class OkHttpUtil {
 
     private OkHttpUtil() {
     }
+//封装我的回调
+   public interface WcgCallBack{
+        void onCancle(Call call, IOException e);
+       void onFailure(Call call, IOException e);
+       void onSuccess(String response) ;
+   }
 
     public static OkHttpClient getInstance() {
         if (okHttpClient == null) {
@@ -68,8 +75,7 @@ public class OkHttpUtil {
      * 参数2 回调Callback
      */
 
-    public static void doGet(String oldUrl,Map<String, String> params, Callback callback) {
-
+    public static void doGet(Activity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
         //创建OkHttpClient请求对象
         OkHttpClient okHttpClient = getInstance();
         FormBody.Builder builder = new FormBody.Builder();
@@ -79,11 +85,27 @@ public class OkHttpUtil {
 
         }
         //创建Request
-        Request request = new Request.Builder().url(oldUrl).post(builder.build()).build();
+        Request request = new Request.Builder().url(url).post(builder.build()).build();
         //得到Call对象
         Call call = okHttpClient.newCall(request);
         //执行异步请求
-        call.enqueue(callback);
+        call.enqueue(new Callback(){
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("wcgneterror",e.toString());
+                if(e.toString().contains("closed")) {
+                    //如果是主动取消的情况下
+                    wcgCallBack.onCancle(call,e);
+                }else {
+                    //其他情况下
+                    wcgCallBack.onFailure(call,e);
+                }
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                wcgCallBack.onSuccess(response.body().string());
+            }
+        });
 
     }
 
@@ -95,7 +117,7 @@ public class OkHttpUtil {
      *      add()
      */
 
-    public static void doPost(String url, Map<String, String> params, Callback callback) {
+    public static void doPost(Activity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
 
         //创建OkHttpClient请求对象
         OkHttpClient okHttpClient = getInstance();
@@ -105,14 +127,27 @@ public class OkHttpUtil {
         //遍历集合
         for (String key : params.keySet()) {
             builder.add(key, params.get(key));
-
         }
-
         //创建Request
-        Request request = new Request.Builder().url(url).post(builder.build()).build();
-
+        Request request = new Request.Builder().url(url).post(builder.build()).tag(activity).build();
         Call call = okHttpClient.newCall(request);
-        call.enqueue(callback);
+        //包装原生回调
+        call.enqueue(new Callback(){
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if(e.toString().contains("closed")) {
+                    //如果是主动取消的情况下
+                    wcgCallBack.onCancle(call,e);
+                }else {
+                    //其他情况下
+                    wcgCallBack.onFailure(call,e);
+                }
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                    wcgCallBack.onSuccess(response.body().string());
+            }
+        });
 
     }
 
