@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">BerryPetsUserAndroid</string>
+    <string name="app_name">BerryPetsUser</string>
+    <string name="wait_please">wait_please.....</string>
+    <string name="checked_update">A new version was detected. Would you update it and detect a new version?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>

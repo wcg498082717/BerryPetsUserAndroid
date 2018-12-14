@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">伴你宠物管家</string>
+    <string name="wait_please">请稍后。。。。</string>
+    <string name="checked_update">检测到新版本，请问您是否更新</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+</resources>

@@ -2,6 +2,7 @@ package berry.wcg.com.berrypetsuserandroid.framework.utils.net;
 
 import android.app.Activity;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.File;
@@ -10,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import berry.wcg.com.berrypetsuserandroid.R;
+import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.utils.dialogutils.LoadingDialogutils;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,9 +56,9 @@ public class OkHttpUtil {
                     int cacheSize = 10 * 1024 * 1024;
 
                     okHttpClient = new OkHttpClient.Builder()//构建器
-                            .connectTimeout(5, TimeUnit.SECONDS)//连接超时
-                            .writeTimeout(5, TimeUnit.SECONDS)//写入超时
-                            .readTimeout(5, TimeUnit.SECONDS)//读取超时
+                            .connectTimeout(5000, TimeUnit.SECONDS)//连接超时
+                            .writeTimeout(5000, TimeUnit.SECONDS)//写入超时
+                            .readTimeout(5000, TimeUnit.SECONDS)//读取超时
 
                             .addInterceptor(new CommonParamsInterceptor())//添加的是应用拦截器...公共参数
                             //.addNetworkInterceptor(new CacheInterceptor())//添加的网络拦截器
@@ -85,7 +89,7 @@ public class OkHttpUtil {
 
         }
         //创建Request
-        Request request = new Request.Builder().url(url).post(builder.build()).build();
+        Request request = new Request.Builder().url(url).build();
         //得到Call对象
         Call call = okHttpClient.newCall(request);
         //执行异步请求
@@ -106,7 +110,6 @@ public class OkHttpUtil {
                 wcgCallBack.onSuccess(response.body().string());
             }
         });
-
     }
 
     /**
@@ -117,35 +120,63 @@ public class OkHttpUtil {
      *      add()
      */
 
-    public static void doPost(Activity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
-
+    public static void doPost(BaseActivity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
+        final Handler handler = new Handler();
+        if (showdialog) {
+            LoadingDialogutils.dismissloadingdialog();
+            LoadingDialogutils.showloadingdialog(activity,activity.getResources().getString(R.string.wait_please), false, false);
+        }
         //创建OkHttpClient请求对象
         OkHttpClient okHttpClient = getInstance();
         //3.x版本post请求换成FormBody 封装键值对参数
-
         FormBody.Builder builder = new FormBody.Builder();
         //遍历集合
         for (String key : params.keySet()) {
             builder.add(key, params.get(key));
         }
         //创建Request
-        Request request = new Request.Builder().url(url).post(builder.build()).tag(activity).build();
+        Request request = new Request.Builder().url(url).post(builder.build()).tag(activity.getLocalClassName()).build();
         Call call = okHttpClient.newCall(request);
         //包装原生回调
         call.enqueue(new Callback(){
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(final Call call, final IOException e) {
                 if(e.toString().contains("closed")) {
-                    //如果是主动取消的情况下
-                    wcgCallBack.onCancle(call,e);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            LoadingDialogutils.dismissloadingdialog();
+                            //如果是主动取消的情况下
+                            wcgCallBack.onCancle(call,e);
+                        }
+                    });
+
                 }else {
-                    //其他情况下
-                    wcgCallBack.onFailure(call,e);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            LoadingDialogutils.dismissloadingdialog();
+                            //其他情况下
+                            wcgCallBack.onFailure(call,e);
+                        }
+                    });
+
                 }
             }
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                    wcgCallBack.onSuccess(response.body().string());
+            public void onResponse(final Call call, final Response response) throws IOException {
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            LoadingDialogutils.dismissloadingdialog();
+                            wcgCallBack.onSuccess(response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
 
@@ -167,7 +198,7 @@ public class OkHttpUtil {
             //获取请求的路径
             String oldUrl = request.url().toString();
 
-            Log.e("---拦截器",request.url()+"---"+request.method()+"--"+request.header("User-agent"));
+//            Log.e("---拦截器",request.url()+"---"+request.method()+"--"+request.header("User-agent"));
 
             //要添加的公共参数...map
             Map<String,String> map = new HashMap<>();
@@ -254,4 +285,18 @@ public class OkHttpUtil {
         }
     }
 
+    public static void cancleRequestByContextAndTag(Activity activity){
+        if(okHttpClient!=null){
+            for (Call call : okHttpClient.dispatcher().queuedCalls()) {
+                if (activity.getLocalClassName().equals(call.request().tag())) {
+                    call.cancel();
+                }
+            }
+            for(Call call : okHttpClient.dispatcher().runningCalls()) {
+                if(activity.getLocalClassName().equals(call.request().tag())){
+                    call.cancel();
+                }
+            }
+        }
+    }
 }

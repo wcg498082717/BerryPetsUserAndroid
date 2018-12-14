@@ -1,13 +1,16 @@
 package berry.wcg.com.berrypetsuserandroid.framework.utils.base;
 
-import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
-import berry.wcg.com.berrypetsuserandroid.R;
+import berry.wcg.com.berrypetsuserandroid.framework.utils.net.OkHttpUtil;
 
 
 /**
@@ -16,9 +19,24 @@ import berry.wcg.com.berrypetsuserandroid.R;
 
 public class BaseActivity extends AppCompatActivity {
     private String tag="BaseActivity";
+    protected BaseActivity instance;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+            instance=BaseActivity.this;
+        }
+        this.getDelegate().getSupportActionBar().hide();
     }
     @Override
     protected void onStart() {
@@ -32,18 +50,20 @@ public class BaseActivity extends AppCompatActivity {
 //        filter.addAction(ACTION_TOKENEND);
 //        registerReceiver(receiver,filter);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (Build.VERSION.SDK_INT >= 21) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.colorOrange));
-            }
-        }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            if (Build.VERSION.SDK_INT >= 21) {
+//                getWindow().setStatusBarColor(getResources().getColor(R.color.colorOrange));
+//            }
+//        }
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
         super.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i("SplashActivity","BaseActivitycancle");
+        OkHttpUtil.cancleRequestByContextAndTag(getIntance());
     }
     //真正沉浸式
 //    @Override
@@ -69,6 +89,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        OkHttpUtil.cancleRequestByContextAndTag(getIntance());
         super.onDestroy();
+    }
+    public BaseActivity getIntance(){
+        return instance;
+    }
+    public String getTag(){
+        return getClass().getName();
     }
 }
