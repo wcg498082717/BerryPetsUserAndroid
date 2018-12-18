@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import berry.wcg.com.berrypetsuserandroid.R;
+import berry.wcg.com.berrypetsuserandroid.framework.MyApplication;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.dialogutils.LoadingDialogutils;
 import okhttp3.Cache;
@@ -35,12 +36,13 @@ public class OkHttpUtil {
      * 提供返回实例的静态方法
      */
     private static OkHttpClient okHttpClient = null;
+    private static Handler handler = new Handler(MyApplication.getInstance().getApplicationContext().getMainLooper());
 
     private OkHttpUtil() {
     }
 //封装我的回调
    public interface WcgCallBack{
-        void onCancle(Call call, IOException e);
+       void onCancle(Call call, IOException e);
        void onFailure(Call call, IOException e);
        void onSuccess(String response) ;
    }
@@ -67,9 +69,7 @@ public class OkHttpUtil {
                             .build();
                 }
             }
-
         }
-
         return okHttpClient;
     }
 
@@ -121,7 +121,7 @@ public class OkHttpUtil {
      */
 
     public static void doPost(BaseActivity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
-        final Handler handler = new Handler();
+
         if (showdialog) {
             LoadingDialogutils.dismissloadingdialog();
             LoadingDialogutils.showloadingdialog(activity,activity.getResources().getString(R.string.wait_please), false, false);
@@ -130,17 +130,24 @@ public class OkHttpUtil {
         OkHttpClient okHttpClient = getInstance();
         //3.x版本post请求换成FormBody 封装键值对参数
         FormBody.Builder builder = new FormBody.Builder();
+        StringBuffer requestlog=new StringBuffer();
+        requestlog.append(url+"?");
         //遍历集合
         for (String key : params.keySet()) {
             builder.add(key, params.get(key));
+            requestlog.append(key+"="+params.get(key)+"&&");
         }
+
         //创建Request
         Request request = new Request.Builder().url(url).post(builder.build()).tag(activity.getLocalClassName()).build();
+        Log.i(activity.getIntance().getTag(),"请求数据为："+requestlog);
+
         Call call = okHttpClient.newCall(request);
         //包装原生回调
         call.enqueue(new Callback(){
             @Override
             public void onFailure(final Call call, final IOException e) {
+                Log.i("okhttputils","收到数据为："+e.toString());
                 if(e.toString().contains("closed")) {
                     handler.post(new Runnable() {
                         @Override
@@ -150,7 +157,6 @@ public class OkHttpUtil {
                             wcgCallBack.onCancle(call,e);
                         }
                     });
-
                 }else {
                     handler.post(new Runnable() {
                         @Override
@@ -160,23 +166,23 @@ public class OkHttpUtil {
                             wcgCallBack.onFailure(call,e);
                         }
                     });
-
                 }
             }
             @Override
-            public void onResponse(final Call call, final Response response) throws IOException {
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            LoadingDialogutils.dismissloadingdialog();
-                            wcgCallBack.onSuccess(response.body().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+            public void onResponse(final Call call, final Response response)  {
+               handler.post(new Runnable() {
+                   @Override
+                   public void run() {
+                       try {
+                           LoadingDialogutils.dismissloadingdialog();
+                           String result=response.body().string();
+                           Log.i("okhttputils","收到数据为："+result);
+                           wcgCallBack.onSuccess(result);
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   }
+               });
             }
         });
 

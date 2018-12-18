@@ -17,10 +17,11 @@ import berry.wcg.com.berrypetsuserandroid.framework.utils.applicationutils.Appli
 import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.jsonutil.JsonUtil;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.net.OkHttpUtil;
+import berry.wcg.com.berrypetsuserandroid.login.activity.LoginActivity;
 import berry.wcg.com.berrypetsuserandroid.login.activity.SplashActivity;
 import berry.wcg.com.berrypetsuserandroid.login.bean.CheckVersionBean;
+import berry.wcg.com.berrypetsuserandroid.login.bean.VerifyBean;
 import berry.wcg.com.berrypetsuserandroid.login.dialog.UpdateDialog;
-import berry.wcg.com.berrypetsuserandroid.main.activity.MainActivity;
 import okhttp3.Call;
 
 public class SplashPersenter {
@@ -82,14 +83,20 @@ public class SplashPersenter {
             }
             @Override
             public void onSuccess(String response) {
-                Log.i(activity.getTag(), "netonSuccess" + response);
+                    Log.i(activity.getTag(), "netonSuccess" +response );
                 try {
                     checkBean = JsonUtil.getEntityByJsonString(response, CheckVersionBean.class);
+                    activity.getTxTime().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            enterLogin();
+                        }
+                    });
                     if (ApplicationUtils.getLocalVersionName(activity.getIntance()).equals(checkBean.getData().getVersion())) {
                         //不用更新，直接开始倒计时
-                        SplashPersenter.this.startTime();
+                        startTime();
                     } else {
-                     SplashPersenter.this.showUpdateDialog();
+                    showUpdateDialog();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -116,17 +123,20 @@ public class SplashPersenter {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            Log.i(activity.getTag(), "time:" + String.valueOf((millisUntilFinished / 1000L)));
             if(activity.getTxTime()!=null){
-//                activity.getTxTime().setText(String.valueOf((millisUntilFinished / 1000L)));
+                activity.getTxTime().setText("跳过"+"("+String.valueOf((millisUntilFinished / 1000))+")s");
             }
         }
 
         @Override
         public void onFinish() {
-            Intent i =  new Intent(activity, MainActivity.class);
-            activity.startActivity(i);
-            activity.finish();
+            enterLogin();
         }
+    }
+
+    public void enterLogin(){
+        Intent i =  new Intent(activity, LoginActivity.class);
+        activity.startActivity(i);
+        activity.finish();
     }
 }

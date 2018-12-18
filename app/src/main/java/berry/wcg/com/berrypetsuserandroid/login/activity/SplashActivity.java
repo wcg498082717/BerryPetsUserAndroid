@@ -19,6 +19,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class SplashActivity extends BaseActivity {
+
     @BindView(R.id.tx_time)
     TextView txTime;
     private SplashPersenter persenter;
@@ -59,7 +60,7 @@ public class SplashActivity extends BaseActivity {
         Log.i(getTag(), "LocalStorageNeverAsk");
     }
 
-    public TextView getTxTime(){
+    public TextView getTxTime() {
         return txTime;
     }
 }

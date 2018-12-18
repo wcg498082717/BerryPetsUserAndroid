@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingLeft="@dimen/basepadding"
+    android:paddingRight="@dimen/basepadding"
+    android:layout_height="match_parent"
+    tools:context=".login.activity.LoginActivity">
+    <ImageView
+
+        android:layout_width="243dp"
+        android:layout_height="83dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/ic_launcher_background" />
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="73dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/aty_login_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入手机号"
+            android:maxLength="@integer/lenth_tx_inputnum"
+            android:inputType="number" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorgray" />
+
+        <EditText
+            android:id="@+id/aty_login_et_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:maxLength="@integer/lenth_tx_inputnum"
+            android:inputType="textPassword" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorgray" />
+
+        <Button
+            android:id="@+id/aty_login_btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_view_height"
+            android:layout_marginTop="55dp"
+            android:text="登录"
+            android:textColor="@color/colorwhite"
+            android:textSize="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/aty_login_tx_forgetpassword"
+                android:layout_width="80dp"
+                android:layout_height="@dimen/common_view_height"
+                android:layout_gravity="center_horizontal"
+
+                android:gravity="center"
+                android:text="忘记密码"
+                android:textColor="@color/colororange" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/aty_login_tx_regist"
+                android:layout_width="80dp"
+                android:layout_height="@dimen/common_view_height"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="注册"
+                android:textColor="@color/colororange" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

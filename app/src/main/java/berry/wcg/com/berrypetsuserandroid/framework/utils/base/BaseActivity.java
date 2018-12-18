@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +19,8 @@ import berry.wcg.com.berrypetsuserandroid.framework.utils.net.OkHttpUtil;
 public class BaseActivity extends AppCompatActivity {
     private String tag="BaseActivity";
     protected BaseActivity instance;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("SplashActivity","BaseActivitycancle");
         OkHttpUtil.cancleRequestByContextAndTag(getIntance());
     }
     //真正沉浸式
