@@ -32,7 +32,6 @@ public class SplashActivity extends BaseActivity {
         persenter = new SplashPersenter(SplashActivity.this);
         //开始检测权限
         SplashActivityPermissionsDispatcher.LocalStoreGrantedWithPermissionCheck(SplashActivity.this);
-
     }
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})

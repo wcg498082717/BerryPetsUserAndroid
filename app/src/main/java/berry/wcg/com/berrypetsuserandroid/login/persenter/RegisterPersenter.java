@@ -76,7 +76,7 @@ public class RegisterPersenter  {
             public void onSuccess(String response) {
                 try {
                     registBean=JsonUtil.getEntityByJsonString(response,RegistBean.class);
-                    if(registBean.getData().equals("注册成功")){
+                    if(registBean.getCode()==0){
                         Intent result=new Intent();
                         result.putExtra("phone",phonenum);
                         result.putExtra("password",password);

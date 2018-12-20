@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import berry.wcg.com.berrypetsuserandroid.R;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.login.persenter.LoginPersenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,11 +32,13 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.aty_login_tx_regist)
     TextView atyLoginTxRegist;
 
+    private LoginPersenter persenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        persenter=new LoginPersenter(LoginActivity.this);
     }
 
     @OnClick({R.id.aty_login_btn_login, R.id.aty_login_tx_forgetpassword, R.id.aty_login_tx_regist})
@@ -43,7 +46,7 @@ public class LoginActivity extends BaseActivity {
         Intent i;
         switch (view.getId()) {
             case R.id.aty_login_btn_login:
-
+                persenter.login(atyLoginEtPhone.getText().toString(),atyLoginEtPassword.getText().toString());
                 break;
             case R.id.aty_login_tx_forgetpassword:
                  i = new Intent(LoginActivity.this,PassWordModifyActivity.class);
@@ -62,6 +65,5 @@ public class LoginActivity extends BaseActivity {
             atyLoginEtPhone.setText(data.getStringExtra("phone"));
             atyLoginEtPassword.setText(data.getStringExtra("password"));
         }
-
     }
 }

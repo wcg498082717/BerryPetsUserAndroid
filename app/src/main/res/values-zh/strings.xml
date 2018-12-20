@@ -4,4 +4,13 @@
     <string name="checked_update">检测到新版本，请问您是否更新</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="mainpage">首页</string>
+    <string name="order">订单</string>
+    <string name="ordercar">购物车</string>
+    <string name="mine">我的</string>
+
+    <string name="orderbyall">综合排序</string>
+    <string name="orderbysell">销量领先</string>
+    <string name="orderbyscore">评分最高</string>
+    <string name="orderbydistance">距离最近</string>
 </resources>

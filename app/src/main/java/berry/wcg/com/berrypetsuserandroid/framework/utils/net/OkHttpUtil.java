@@ -112,15 +112,15 @@ public class OkHttpUtil {
         });
     }
 
-    /**
-     * post请求
-     * 参数1 url
-     * 参数2 Map<String, String> params post请求的时候给服务器传的数据
-     *      add..("","")
-     *      add()
-     */
 
-    public static void doPost(BaseActivity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
+    /**
+     * @param activity 传入上下文
+     * @param url 传输地址
+     * @param params HashMap形式封装
+     * @param showdialog true 显示加载动画
+     * @param wcgCallBack 事件回调
+     */
+    public static void doPost(final BaseActivity activity, String url, Map<String, String> params, Boolean showdialog, final WcgCallBack wcgCallBack) {
 
         if (showdialog) {
             LoadingDialogutils.dismissloadingdialog();
@@ -176,7 +176,7 @@ public class OkHttpUtil {
                        try {
                            LoadingDialogutils.dismissloadingdialog();
                            String result=response.body().string();
-                           Log.i("okhttputils","收到数据为："+result);
+                           Log.i(activity.getIntance().getTag(),"收到数据为："+result);
                            wcgCallBack.onSuccess(result);
                        } catch (Exception e) {
                            e.printStackTrace();

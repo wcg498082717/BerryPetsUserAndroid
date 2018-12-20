@@ -25,5 +25,7 @@ public  class AppConfig {
     public static final String Url_CheckVersion=USE_URL+"/user/AndroidCheckVersion";
     public static final String url_getcode=USE_URL+"/user/getverifycode";
     public static final String url_regist=USE_URL+"/user/withoutlogin/registuser";
-    public static final String url_modifyPassword=USE_URL+"/user/withoutlogin/registuser";
+    public static final String url_modifyPassword=USE_URL+"/user/withoutlogin/modifyPassWord";
+    public static final String url_login=USE_URL+"/user/withoutlogin/applogin";
+    public static final String url_main=USE_URL+"/user/withnologin/indexv2";
 }
