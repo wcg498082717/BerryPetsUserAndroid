@@ -52,6 +52,7 @@ public class FragmentMainPageOrderByAllPersenter {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                
 
 //                if (!loading && totalItemCount < (lastVisibleItem + Constant.VISIBLE_THRESHOLD)) {
 //                    new ArticleTask(mActivity).execute(mAdapter.getBottomArticleId());
