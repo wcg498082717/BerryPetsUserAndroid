@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import berry.wcg.com.berrypetsuserandroid.R;
-import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.baseactivity.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.login.persenter.LoginPersenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

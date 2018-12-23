@@ -14,13 +14,12 @@ import java.util.HashMap;
 import berry.wcg.com.berrypetsuserandroid.R;
 import berry.wcg.com.berrypetsuserandroid.framework.AppConfig;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.applicationutils.ApplicationUtils;
-import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.baseactivity.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.jsonutil.JsonUtil;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.net.OkHttpUtil;
 import berry.wcg.com.berrypetsuserandroid.login.activity.LoginActivity;
 import berry.wcg.com.berrypetsuserandroid.login.activity.SplashActivity;
 import berry.wcg.com.berrypetsuserandroid.login.bean.CheckVersionBean;
-import berry.wcg.com.berrypetsuserandroid.login.bean.VerifyBean;
 import berry.wcg.com.berrypetsuserandroid.login.dialog.UpdateDialog;
 import okhttp3.Call;
 

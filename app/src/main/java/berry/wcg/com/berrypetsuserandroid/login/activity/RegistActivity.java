@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import berry.wcg.com.berrypetsuserandroid.R;
-import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.baseactivity.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.toast.T;
 import berry.wcg.com.berrypetsuserandroid.login.persenter.RegisterPersenter;
 import butterknife.BindView;

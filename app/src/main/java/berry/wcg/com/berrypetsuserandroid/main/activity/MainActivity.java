@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.widget.FrameLayout;
 
 import berry.wcg.com.berrypetsuserandroid.R;
-import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.baseactivity.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.toast.T;
 import berry.wcg.com.berrypetsuserandroid.main.persenter.MainPersenter;
 import butterknife.BindView;

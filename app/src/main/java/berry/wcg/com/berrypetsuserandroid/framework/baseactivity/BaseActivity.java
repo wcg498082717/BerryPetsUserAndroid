@@ -1,4 +1,4 @@
-package berry.wcg.com.berrypetsuserandroid.framework.utils.base;
+package berry.wcg.com.berrypetsuserandroid.framework.baseactivity;
 
 import android.graphics.Color;
 import android.os.Build;

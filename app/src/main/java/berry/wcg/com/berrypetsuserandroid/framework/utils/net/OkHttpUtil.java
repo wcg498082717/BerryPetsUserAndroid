@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import berry.wcg.com.berrypetsuserandroid.R;
 import berry.wcg.com.berrypetsuserandroid.framework.MyApplication;
-import berry.wcg.com.berrypetsuserandroid.framework.utils.base.BaseActivity;
+import berry.wcg.com.berrypetsuserandroid.framework.baseactivity.BaseActivity;
 import berry.wcg.com.berrypetsuserandroid.framework.utils.dialogutils.LoadingDialogutils;
 import okhttp3.Cache;
 import okhttp3.Call;
